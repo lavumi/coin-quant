@@ -15,7 +15,14 @@
 └── quant.db
 ```
 
-- Run
+### .env
+```
+UPBIT_OPEN_API_ACCESS_KEY=access-key
+UPBIT_OPEN_API_SECRET_KEY=secret-key
+```
+
+
+### Run
 ```bash
 go run cmd/main.go
 ```
