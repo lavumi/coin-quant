@@ -4,8 +4,6 @@ import (
 	"coinquant/pkg/upbit/model"
 	"encoding/json"
 	"fmt"
-	"github.com/golang-jwt/jwt"
-	"github.com/google/uuid"
 	"io"
 	"log"
 	"net/http"
@@ -13,6 +11,9 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/golang-jwt/jwt"
+	"github.com/google/uuid"
 )
 
 type Client struct {
@@ -68,8 +69,6 @@ func (c *Client) GetCandleChart(market string, candleType model.CandleType, end 
 		return nil, err
 	}
 
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.token))
-
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -80,6 +79,9 @@ func (c *Client) GetCandleChart(market string, candleType model.CandleType, end 
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
+	if resp.StatusCode > 299 {
+		log.Fatalf("Response failed with status code: %d and\nbody: %s\n", resp.StatusCode, body)
+	}
 	if err != nil {
 		log.Fatalf("Error reading response body: %v", err)
 		return nil, err
