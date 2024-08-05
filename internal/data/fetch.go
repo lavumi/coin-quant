@@ -27,7 +27,7 @@ func GetHistory(c *upbit.Client, db *gorm.DB, market string, interval model.Cand
 		panic("only day intervals are supported")
 	}
 
-	err := db.Where("market = ? AND candle_date_time_utc BETWEEN ? AND ?", market, start, end).Find(&existingCandles).Error
+	err := db.Where("market = ? AND candle_date_time_utc BETWEEN ? AND ?", market, start, end.AddDate(0, 0, 1)).Find(&existingCandles).Error
 	if err != nil {
 		return nil, err
 	}

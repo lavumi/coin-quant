@@ -1,4 +1,4 @@
-package strategy
+package module
 
 import (
 	"coinquant/internal/data"
@@ -9,7 +9,6 @@ import (
 )
 
 func GetMovingAverage(c *upbit.Client, db *gorm.DB, market string, interval model.CandleType, limit int, end time.Time) (float64, error) {
-	now := time.Now()
 	start := end.Add(-time.Duration(limit*24) * time.Hour)
 	//get day chart
 	candles, err := data.GetHistory(c, db, market, interval, start, end)
@@ -18,11 +17,11 @@ func GetMovingAverage(c *upbit.Client, db *gorm.DB, market string, interval mode
 	}
 
 	//get current minutes data
-	chart, err := c.GetCandleChart(market, model.Minutes, now, 1)
-	if err != nil {
-		return 0., err
-	}
-	candles = append(candles, chart[0])
+	//chart, err := c.GetCandleChart(market, model.Minutes, end, 1)
+	//if err != nil {
+	//	return 0., err
+	//}
+	//candles = append(candles, chart[0])
 
 	var sum float64
 	for _, candle := range candles {

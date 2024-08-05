@@ -28,4 +28,10 @@ go run cmd/main.go
 ```
 
 
+### Todo
 
+- [x] Day Moving Average
+- [ ] Implementing a Strategy Using Moving Averages
+- [ ] Balance Management
+- [ ] Back tracking
+- [ ] Buy and Sell Orders and Asset Management
